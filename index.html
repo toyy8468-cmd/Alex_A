@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Alex_A Shop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Kanit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-left">
+    <button class="hamburger" id="menuToggle">☰</button>
+    <div class="logo">⚡ Alex_A</div>
+  </div>
+  <div class="nav-right">
+    <button class="search-btn" id="searchToggle">🔍</button>
+    <div class="balance-chip" id="balanceChip">
+      <span class="coin-icon">🪙</span>
+      <span id="navBalance">0</span> บาท
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH BAR -->
+<div class="search-bar-container" id="searchBar">
+  <input type="text" id="searchInput" placeholder="🔍 ค้นหาสินค้า..." oninput="searchProducts()">
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="sidebar-logo">⚡ Alex_A</span>
+    <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#" onclick="showPage('home');closeSidebar()">🏠 หน้าแรก</a>
+    <a href="#" onclick="showPage('products');closeSidebar()">🛒 สินค้าทั้งหมด</a>
+    <a href="#" onclick="showPage('topup');closeSidebar()">💳 เติมเงิน</a>
+    <a href="#" onclick="showPage('contact');closeSidebar()">📘 ติดต่อเรา (Facebook)</a>
+  </nav>
+  <div class="sidebar-divider">ระบบสมาชิก</div>
+  <div id="sidebarUserSection"></div>
+</aside>
+
+<main class="main-content">
+
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="hero-banner">
+      <div class="hero-particles"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Alex_A Shop</h1>
+        <p class="hero-subtitle">ร้านไก่ตัน ถูกที่สุดในประเทศไทย</p>
+        <p class="hero-desc">ไก่ตันคุณภาพทุกตัว การันตีจากยอดขาย 1 ล้านไอดี</p>
+        <div class="hero-btns">
+          <button class="btn-secondary" onclick="showAuthModal('login')">จัดการบัญชี</button>
+          <button class="btn-primary"   onclick="showPage('products')">สินค้าทั้งหมด</button>
+        </div>
+      </div>
+    </div>
+    <div class="announcement-banner">
+      <div class="announce-inner">
+        <span class="announce-icon">👑</span>
+        <strong>ประกาศสำคัญ</strong>
+        <p>ติดตามเพจเพื่อรับข่าวสารและกิจกรรมแจกของรางวัลบ่อยๆ!</p>
+        <button class="announce-btn" onclick="window.open('https://www.facebook.com/share/1Bum9H3u8G/','_blank')">📘 กดเพื่อติดตามเพจ Alex_A!!</button>
+      </div>
+    </div>
+    <div class="read-before-buy">
+      <h2>📌 อ่านก่อนซื้อ 📌</h2>
+      <p>โปรดอ่านรายละเอียดสินค้าทุกครั้งก่อนซื้อ</p>
+      <p>📢 อัดคลิปตั้งแต่ซื้อจนเข้าไอดีทุกครั้ง หากไม่มีคลิปแล้วมาบอกว่าเข้าไม่ได้ งดเครมทุกกรณี</p>
+    </div>
+    <div class="stats-section">
+      <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-info"><div class="stat-label">ผู้ใช้ทั้งหมด</div><div class="stat-value" id="statUsers">0</div><div class="stat-sub">คน</div></div></div>
+      <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-info"><div class="stat-label">สินค้าทั้งหมด</div><div class="stat-value" id="statProducts">0</div><div class="stat-sub">ชิ้น</div></div></div>
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-info"><div class="stat-label">ขายแล้วทั้งหมด</div><div class="stat-value" id="statSold">0</div><div class="stat-sub">ชิ้น</div></div></div>
+    </div>
+    <div class="section-header">
+      <h2>หมวดหมู่แนะนำ</h2>
+      <button class="see-more-btn" onclick="showPage('products')">ดูเพิ่มเติม ›</button>
+    </div>
+    <div class="category-cards" id="homeCategoryCards"></div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="page" id="page-products">
+    <div class="page-header">
+      <div class="breadcrumb">🏠 หน้าแรก › 🛒 สินค้าทั้งหมด</div>
+      <h1>เลือกหมวดหมู่ที่คุณสนใจ</h1>
+    </div>
+    <div class="category-grid" id="categoryGrid"></div>
+    <div class="section-header" style="margin-top:1.5rem"><h2>สินค้าทั้งหมด</h2></div>
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <!-- PRODUCT DETAIL -->
+  <div class="page" id="page-product-detail">
+    <div class="page-header">
+      <div class="breadcrumb" id="detailBreadcrumb">🏠 หน้าแรก › สินค้า</div>
+    </div>
+    <div class="product-detail-container" id="productDetailContent"></div>
+  </div>
+
+  <!-- TOPUP — อังเป๋าอย่างเดียว -->
+  <div class="page" id="page-topup">
+    <div class="page-header">
+      <h1>💳 เติมเงิน</h1>
+      <p>Topup Selection</p>
+    </div>
+    <div class="topup-methods">
+      <div class="topup-card" id="topupCardTW" onclick="showTopupForm()">
+        <div class="topup-icon">🧧</div>
+        <h3>Truemoney Wallet (อังเป๋า)</h3>
+        <div class="topup-fee"><span class="fee-badge">0%</span> ไม่มีค่าธรรมเนียม</div>
+      </div>
+    </div>
+    <div class="topup-form-section" id="topupFormTW" style="display:none">
+      <h3>🧧 เติมเงินด้วย TrueWallet อังเป๋า</h3>
+      <div id="twAdminInfo"></div>
+      <div class="form-group">
+        <label>กรอกลิ้งค์อังเป๋า (TrueWallet Gift Link)</label>
+        <input type="text" id="truewalletLink" class="form-input" placeholder="https://gift.truemoney.com/campaign/?v=..."/>
+        <small>⚠️ ระบบจะตรวจสอบลิ้งค์และเพิ่มยอดเงินให้อัตโนมัติ</small>
+      </div>
+      <button class="btn-primary" onclick="processTruewalletTopup()">✅ ยืนยันเติมเงิน</button>
+      <div id="truewalletStatus" class="topup-status"></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact">
+    <div class="page-header">
+      <h1>📘 ติดต่อเรา</h1>
+      <p>ช่องทางการติดต่อ</p>
+    </div>
+    <div class="contact-cards">
+      <a href="https://www.facebook.com/share/1Bum9H3u8G/" target="_blank" class="contact-card facebook">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" alt="Facebook">
+        <div>
+          <h3>Facebook / เพจ Alex_A</h3>
+          <p>กดเพื่อเปิดหน้าเพจของเรา</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="page-profile">
+    <div class="page-header"><h1>👤 โปรไฟล์</h1></div>
+    <div class="profile-tabs" id="profileTabsBar">
+      <button class="tab-btn active" data-tab="info"             onclick="switchProfileTab('info')">โปรไฟล์</button>
+      <button class="tab-btn"        data-tab="settings"         onclick="switchProfileTab('settings')">การตั้งค่า</button>
+      <button class="tab-btn"        data-tab="topup-history"    onclick="switchProfileTab('topup-history')">ประวัติเติมเงิน</button>
+      <button class="tab-btn"        data-tab="purchase-history" onclick="switchProfileTab('purchase-history')">ประวัติการซื้อ</button>
+      <button class="tab-btn"        data-tab="coupon"           onclick="switchProfileTab('coupon')">คูปอง</button>
+    </div>
+    <div id="profileTabContent"></div>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="page" id="page-admin">
+    <div class="page-header">
+      <h1>🔐 Admin Panel</h1>
+      <p>จัดการหลังร้าน Alex_A</p>
+    </div>
+    <div class="admin-tabs" id="adminTabsBar">
+      <button class="tab-btn active" data-tab="dashboard" onclick="switchAdminTab('dashboard')">📊 Dashboard</button>
+      <button class="tab-btn"        data-tab="products"  onclick="switchAdminTab('products')">📦 สินค้า</button>
+      <button class="tab-btn"        data-tab="users"     onclick="switchAdminTab('users')">👥 สมาชิก</button>
+      <button class="tab-btn"        data-tab="topups"    onclick="switchAdminTab('topups')">💳 เติมเงิน</button>
+      <button class="tab-btn"        data-tab="coupons"   onclick="switchAdminTab('coupons')">🎟️ คูปอง</button>
+      <button class="tab-btn"        data-tab="settings"  onclick="switchAdminTab('settings')">⚙️ ตั้งค่าการรับเงิน</button>
+    </div>
+    <div id="adminTabContent"></div>
+  </div>
+
+</main>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal" style="display:none">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin"    onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+      <button class="auth-tab"        id="tabRegister" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
+    </div>
+    <div id="loginForm">
+      <h2>🔐 เข้าสู่ระบบ</h2>
+      <div class="form-group"><label>ชื่อผู้ใช้</label><input type="text" id="loginUser" class="form-input" placeholder="ชื่อผู้ใช้"/></div>
+      <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="loginPass" class="form-input" placeholder="รหัสผ่าน"/></div>
+      <button class="btn-primary full-width" onclick="login()">เข้าสู่ระบบ</button>
+      <div id="loginError" class="error-msg"></div>
+    </div>
+    <div id="registerForm" style="display:none">
+      <h2>📝 สมัครสมาชิก</h2>
+      <div class="form-group"><label>ชื่อ (Username)</label><input type="text" id="regName" class="form-input" placeholder="ชื่อผู้ใช้"/></div>
+      <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="regPass" class="form-input" placeholder="รหัสผ่าน"/></div>
+      <div class="form-group"><label>อีเมล</label><input type="email" id="regEmail" class="form-input" placeholder="email@example.com"/></div>
+      <button class="btn-primary full-width" onclick="register()">สมัครสมาชิก</button>
+      <div id="registerError" class="error-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BUY MODAL -->
+<div class="modal-overlay" id="buyModal" style="display:none">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('buyModal')">✕</button>
+    <h2>🛒 ยืนยันการซื้อ</h2>
+    <div id="buyModalContent"></div>
+    <button class="btn-primary full-width" onclick="confirmBuy()">✅ ยืนยันซื้อสินค้า</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
